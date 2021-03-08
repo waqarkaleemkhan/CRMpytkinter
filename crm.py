@@ -66,7 +66,18 @@ def add_customer():
 
 	# clear fields when click button
 	clear_fields()
-
+def list_of_customers():
+	list_customers_query=Tk()
+	list_customers_query.title('List of All Customers')
+	list_customers_query.geometry("800x600")
+	my_cursor.execute("SELECT * FROM customers")
+	result = my_cursor.fetchall()
+	for index, x in enumerate(result):
+		num=0
+		for y in x:
+			lookup_lable=Label(list_customers_query,text=y)
+			lookup_lable.grid(row=index,column=num)
+			num+=1
 #create a label
 title_label = Label(root,text="Customer Database", font=('Helvetica',16))
 title_label.grid(row=0,column=0,pady="10")
@@ -135,5 +146,9 @@ add_customer_button.grid(row=14,column=0,padx=10,pady=10)
 
 clear_fields_button=Button(root,text='Clear Fields',command=clear_fields)
 clear_fields_button.grid(row=14,column=1,padx=10,pady=10)
+
+#list customers button
+list_customers_button=Button(root,text='List Customer',command=list_of_customers)
+list_customers_button.grid(row=14,column=3,padx=10,pady=10)
 
 root.mainloop()
