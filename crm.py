@@ -1,5 +1,7 @@
 import psycopg2
 from tkinter import *
+import csv
+
 root=Tk()
 root.title('CRM System')
 root.geometry("600x600")
@@ -66,6 +68,14 @@ def add_customer():
 
 	# clear fields when click button
 	clear_fields()
+
+#write to csv function
+def write_to_csv(result):
+	with open('customers.csv','a') as f:# a stand for append 
+		w=csv.writer(f,dialect='excel')
+		for record in result:
+
+			w.writerow(result)
 def list_of_customers():
 	list_customers_query=Tk()
 	list_customers_query.title('List of All Customers')
@@ -78,6 +88,8 @@ def list_of_customers():
 			lookup_lable=Label(list_customers_query,text=y)
 			lookup_lable.grid(row=index,column=num)
 			num+=1
+	csv_button =Button(list_customers_query,text='Export to Excel',command=lambda:write_to_csv(result))
+	csv_button.grid(row=index+1,column=0)
 #create a label
 title_label = Label(root,text="Customer Database", font=('Helvetica',16))
 title_label.grid(row=0,column=0,pady="10")
